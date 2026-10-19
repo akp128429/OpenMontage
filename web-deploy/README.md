@@ -2,10 +2,10 @@
 
 This repository now has two independent browser services:
 
-1. **Studio** (`studio_web/`) turns a short creative brief into a scene plan. Configure `OPENAI_API_KEY` and a private `STUDIO_ACCESS_CODE` in the Studio service environment before enabling generation. Never commit either value.
+1. **Studio** (`studio_web/`) turns a short creative brief into a prompt. The user opens ChatGPT or Gemini's official website, signs in there, then pastes the JSON response back into Studio. No API key or provider password is collected by this app.
 2. **Storyboard** (`storyboard_web/`) imports a Studio project JSON file and lets you revise scene text and export the updated JSON.
 
-Projects are saved in each user's browser. The Storyboard app is intentionally a separate service and domain, so transfer a project with **Export project JSON** in Studio and **Import project JSON** in Storyboard. This first online version does not render video or share project storage between the two services.
+Projects are saved in each user's browser. The Storyboard app is intentionally a separate service and domain, so transfer a project with **Export project JSON** in Studio and **Import project JSON** in Storyboard. This first online version does not render video or share project storage between the two services. Model use occurs manually on ChatGPT/Gemini; Studio cannot call the consumer account directly without a supported integration/API.
 
 ## Deploy separately on Render
 
@@ -16,7 +16,7 @@ Connect this repository to Render, then create two Web Services. For both, use t
 - Name: `openmontage-studio`
 - Build command: `python -m py_compile studio_web/app.py`
 - Start command: `python studio_web/app.py`
-- Environment variables: set `STUDIO_ACCESS_CODE` to a private passphrase and `OPENAI_API_KEY` to your OpenAI API key. Optionally set `OPENAI_MODEL`.
+- No provider API environment variables are needed.
 
 ### Storyboard service
 
