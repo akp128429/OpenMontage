@@ -1,10 +1,14 @@
-"""Standalone Storyboard review service (Python stdlib only)."""
+"""Standalone Storyboard review and browser video maker service (Python stdlib only)."""
 import json
 import os
 from pathlib import Path
 from wsgiref.simple_server import make_server
 
-INDEX = Path(__file__).resolve().parent / "static" / "index.html"
+STATIC = Path(__file__).resolve().parent / "static"
+PAGES = {
+    "/": STATIC / "index.html",
+    "/video": STATIC / "video.html",
+}
 
 
 def app(environ, start_response):
@@ -14,8 +18,8 @@ def app(environ, start_response):
         start_response("200 OK", [("Content-Type", "application/json; charset=utf-8"),
                                    ("Content-Length", str(len(body))), ("Cache-Control", "no-store")])
         return [body]
-    if method == "GET" and path == "/":
-        body = INDEX.read_bytes()
+    if method == "GET" and path in PAGES:
+        body = PAGES[path].read_bytes()
         start_response("200 OK", [("Content-Type", "text/html; charset=utf-8"),
                                    ("Content-Length", str(len(body))),
                                    ("X-Content-Type-Options", "nosniff")])
