@@ -7,7 +7,8 @@ from wsgiref.simple_server import make_server
 STATIC = Path(__file__).resolve().parent / "static"
 PAGES = {
     "/": STATIC / "index.html",
-    "/video": STATIC / "video.html",
+    "/video": STATIC / "video" / "index.html",
+    "/video/": STATIC / "video" / "index.html",
 }
 
 
